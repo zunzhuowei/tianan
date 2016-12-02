@@ -56,6 +56,11 @@ public class EvalutionService implements IEvalutionService {
 	}
 
 	@Override
+	public void targetRecall(String objectId, String planId) {
+		evalutionDao.targetRecall(objectId, planId);
+	}
+
+	@Override
 	public Evaluation loadSelfByP0400(String p0400, String mainbodyid, String objectid,String planid) {
 		return this.evalutionDao.loadSelfByP0400(p0400, mainbodyid, objectid,planid);
 	}

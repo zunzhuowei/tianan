@@ -38,13 +38,8 @@ public class FinalController {
 
     //.ftl
     @RequestMapping(value = "/final", method = RequestMethod.GET)//planStatus如果为空或者不为4，那就是分发状态
-    public String init(Model model, String objectid, int planid, String mainbodyid, String planStatus, String objectSpFlag, String template_id, String newBody, String scoreStatus, String lastMainBodyId) {
-//System.out.println("objectid:" + objectid + "---" + "mainbodyid:" + mainbodyid + "---"
- //             + "planid:" + planid + "----planStatus:" + planStatus+"----template_id:"+template_id);
-        //TODO 测试时候固定某个人，在集成系统的时候需要清除下面两行代码！ 00000425
-    //public String init(Model model){
-        //String objectid = "00000117";String mainbodyid = "00000117";int planid = 6;String planStatus = "5"; String objectSpFlag = "01";
-        //+"&lastMainBodyId="+lastMainBodyId
+    public String init(Model model, String objectid, int planid, String mainbodyid, String planStatus,
+                       String objectSpFlag, String template_id, String newBody, String scoreStatus, String lastMainBodyId) {
         List<Target> list = this.targetService.findAllDesc1AndId();
         List<P04> t = this.p04Service.listAllP04(planid + "", objectid,template_id);
         List<SecondP04> sps = this.secondP04Service.listAllSecondP04(planid + "", objectid,template_id);
@@ -88,14 +83,6 @@ public class FinalController {
         return finalService.go2View(objectSpFlag, planStatus, objectid, mainbodyid,template_id,newBody,scoreStatus);
     }
 
-/*    //.jsp
-    @RequestMapping(value = "/final1", method = RequestMethod.GET)
-    public String init1(Model model) {
-        List<Target> list = this.targetService.findAllDesc1AndId();
-        model.addAttribute("targets", list);
-        System.out.println("---------------------------------->>>>>/target/final1.jsp");
-        return "/target/final1";
-    }*/
 
     //下拉列表控制
     @RequestMapping(value = "/select", method = RequestMethod.POST)

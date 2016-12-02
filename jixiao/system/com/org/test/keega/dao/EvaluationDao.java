@@ -82,4 +82,10 @@ public class EvaluationDao implements IEvaluationDao {
 				"Banjo", 5276L);*/
 	}
 
+	@Override
+	public void targetRecall(String objectId, String planId) {
+		jdbcTemplate.execute("update per_object set sp_flag='01' " +
+				"where object_id='"+objectId+"' and plan_id='"+planId+"' ");
+	}
+
 }

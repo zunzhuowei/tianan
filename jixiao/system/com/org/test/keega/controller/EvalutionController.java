@@ -9,6 +9,7 @@ import com.org.test.keega.service.IFeedBackService;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
@@ -127,6 +128,14 @@ public class EvalutionController {
 			this.feedBackService.update(feedBack, planId, objectId);
 		}
 		return null;
+	}
+
+	@ResponseBody
+	@RequestMapping(value = "/targetRecall",method = RequestMethod.GET)
+	public void targetRecall(@RequestParam(name = "objectId") String objectId,
+							 @RequestParam(name = "planId") String planId) {
+		//System.out.println(objectId + "----" + planId);
+		evalutionSerivce.targetRecall(objectId, planId);
 	}
 
 }

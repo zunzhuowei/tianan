@@ -61,4 +61,11 @@ public interface IEvaluationDao {
 	
 	public void submitEva(String sp_flag,String objectid,String planid);
 
+	/**
+	 * 交办之后，未审核的时候可以撤回。
+	 * @param objectId 填目标卡的id
+	 * @param planId 计划id
+	 */
+	public void targetRecall(String objectId, String planId);
+
 }
