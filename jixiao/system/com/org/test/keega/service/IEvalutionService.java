@@ -67,4 +67,18 @@ public interface IEvalutionService {
 	 */
 	public void targetRecall(String objectId, String planId);
 
+	/**
+	 * 评分结束之后，员工确认考核结果
+	 * @param objectId
+	 * @param planId
+	 */
+	public void resultConfirm(String objectId, String planId);
+
+	/**
+	 * 显示员工确认考核结果
+	 * @return 员工考核结果的信息json
+	 * @param key
+	 * @param searchType
+	 */
+    public String showConfirmResult(String key, String searchType);
 }

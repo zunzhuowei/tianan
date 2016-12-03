@@ -68,4 +68,17 @@ public interface IEvaluationDao {
 	 */
 	public void targetRecall(String objectId, String planId);
 
+	/**
+	 * 评分结束之后，员工确认考核结果
+	 * @param objectId 填目标卡的id
+	 * @param planId 计划id
+	 */
+    public void resultConfirm(String objectId, String planId);
+
+	/**
+	 *显示员工考核确认信息
+	 * @return json
+	 * @param key
+	 */
+    public String showConfirmResult(String key,String searchType);
 }

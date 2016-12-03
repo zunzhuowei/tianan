@@ -7,6 +7,7 @@ import com.org.test.keega.service.ICommonScoreService;
 import com.org.test.keega.service.IEvalutionService;
 import com.org.test.keega.service.IFeedBackService;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -136,6 +137,28 @@ public class EvalutionController {
 							 @RequestParam(name = "planId") String planId) {
 		//System.out.println(objectId + "----" + planId);
 		evalutionSerivce.targetRecall(objectId, planId);
+	}
+
+	@ResponseBody
+	@RequestMapping(value = "/resultConfirm", method = RequestMethod.GET)
+	public void resultConfirm(@RequestParam(name = "objectId") String objectId,
+							  @RequestParam(name = "planId") String planId) {
+		evalutionSerivce.resultConfirm(objectId, planId);
+	}
+
+	//查看考核确认情况
+	@RequestMapping(value = "/showConfirm",method = RequestMethod.GET)
+	public String showConfirmResult() {
+		return "/target/confirmResult";
+	}
+
+	//searchType 00表示查询未确认的，01表示查询已经确认的，02表示查询所有。
+	@ResponseBody
+	@RequestMapping(value = "/giveConfirm", method = RequestMethod.POST)
+	public String giveConfirmResult(@RequestParam(name = "key",defaultValue = "") String key,
+									@RequestParam(name = "searchType",defaultValue = "02") String searchType) {
+		//System.out.println(evalutionSerivce.showConfirmResult(key,searchType));
+		return evalutionSerivce.showConfirmResult(key,searchType);
 	}
 
 }

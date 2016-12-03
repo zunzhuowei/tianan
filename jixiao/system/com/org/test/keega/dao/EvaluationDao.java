@@ -1,9 +1,12 @@
 package com.org.test.keega.dao;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.Resource;
 
+import com.dexcoder.commons.utils.JsonUtil;
+import flexjson.JSON;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
@@ -12,7 +15,6 @@ import com.org.test.keega.utli.AddUtil;
 import com.org.test.keega.utli.DeleteUtil;
 import com.org.test.keega.utli.ListUtil;
 import com.org.test.keega.utli.LoadUtil;
-import com.org.test.keega.utli.UpdateUtil;
 
 @SuppressWarnings("unchecked")
 @Repository("evaluationDao")
@@ -86,6 +88,69 @@ public class EvaluationDao implements IEvaluationDao {
 	public void targetRecall(String objectId, String planId) {
 		jdbcTemplate.execute("update per_object set sp_flag='01' " +
 				"where object_id='"+objectId+"' and plan_id='"+planId+"' ");
+	}
+
+	@Override//confirm默认是0，表示结果没有确认，当确认之后，更新为1.字段confirm类型是int类型。
+	public void resultConfirm(String objectId, String planId) {
+		//System.out.println(objectId + "----" + planId);
+		jdbcTemplate.execute("update per_object set confirm = '1' " +
+				"where object_id='"+objectId+"' and plan_id='"+planId+"' ");
+	}
+
+	@Override
+	public String showConfirmResult(String key, String searchType) {
+		String sql = null;
+		if ("00".equals(searchType)) {//查询未确认的。
+			sql = "select * from (select object_id as id,plan_id as planId," +
+					" (select B0110 from UsrA01 where A0100 = object_id) orgid," +
+					" (select a0101 from UsrA01 where A0100 = object_id) as name," +
+					" (select codeitemdesc from organization where codeitemid = ((select B0110 from UsrA01 where A0100 = object_id))) as company," +
+					" (select codeitemdesc from organization where codeitemid = ((select E0122 from UsrA01 where A0100 = object_id))) as department," +
+					" (select codeitemdesc from organization where codeitemid = ((select E01A1 from UsrA01 where A0100 = object_id))) as station " +
+					" from per_object where confirm='0'" +
+					" ) a where (a.name like '%"+key+"%'" +
+					" or a.company like '%"+key+"%' " +
+					" or a.department like '%"+key+"%' " +
+					" or a.station like '%"+key+"%') and a.orgid like '%'";//orgId
+		} else if ("01".equals(searchType)) {//查询已经确认的。
+			sql = "select * from (select object_id as id,plan_id as planId," +
+					" (select B0110 from UsrA01 where A0100 = object_id) orgid," +
+					" (select a0101 from UsrA01 where A0100 = object_id) as name," +
+					" (select codeitemdesc from organization where codeitemid = ((select B0110 from UsrA01 where A0100 = object_id))) as company," +
+					" (select codeitemdesc from organization where codeitemid = ((select E0122 from UsrA01 where A0100 = object_id))) as department," +
+					" (select codeitemdesc from organization where codeitemid = ((select E01A1 from UsrA01 where A0100 = object_id))) as station " +
+					" from per_object where confirm='1'" +
+					" ) a where (a.name like '%"+key+"%'" +
+					" or a.company like '%"+key+"%' " +
+					" or a.department like '%"+key+"%' " +
+					" or a.station like '%"+key+"%') and a.orgid like '%'";//orgId
+		} else if ("02".equals(searchType)) {//查询所有人
+			sql = "select * from (select object_id as id,plan_id as planId," +
+					" (select B0110 from UsrA01 where A0100 = object_id) orgid," +
+					" (select a0101 from UsrA01 where A0100 = object_id) as name," +
+					" (select codeitemdesc from organization where codeitemid = ((select B0110 from UsrA01 where A0100 = object_id))) as company," +
+					" (select codeitemdesc from organization where codeitemid = ((select E0122 from UsrA01 where A0100 = object_id))) as department," +
+					" (select codeitemdesc from organization where codeitemid = ((select E01A1 from UsrA01 where A0100 = object_id))) as station " +
+					" from per_object " +
+					" ) a where (a.name like '%"+key+"%'" +
+					" or a.company like '%"+key+"%' " +
+					" or a.department like '%"+key+"%' " +
+					" or a.station like '%"+key+"%') and a.orgid like '%'";//orgId
+		} else {//其他查询所有人
+			sql = "select * from (select object_id as id,plan_id as planId," +
+					" (select B0110 from UsrA01 where A0100 = object_id) orgid," +
+					" (select a0101 from UsrA01 where A0100 = object_id) as name," +
+					" (select codeitemdesc from organization where codeitemid = ((select B0110 from UsrA01 where A0100 = object_id))) as company," +
+					" (select codeitemdesc from organization where codeitemid = ((select E0122 from UsrA01 where A0100 = object_id))) as department," +
+					" (select codeitemdesc from organization where codeitemid = ((select E01A1 from UsrA01 where A0100 = object_id))) as station " +
+					" from per_object " +
+					" ) a where (a.name like '%"+key+"%'" +
+					" or a.company like '%"+key+"%' " +
+					" or a.department like '%"+key+"%' " +
+					" or a.station like '%"+key+"%') and a.orgid like '%'";//orgId
+		}
+		List<Map<String,Object>> mapList = jdbcTemplate.queryForList(sql);
+		return JsonUtil.list2json(mapList);
 	}
 
 }

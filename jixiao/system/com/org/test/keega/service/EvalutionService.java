@@ -61,6 +61,16 @@ public class EvalutionService implements IEvalutionService {
 	}
 
 	@Override
+	public void resultConfirm(String objectId, String planId) {
+		this.evalutionDao.resultConfirm(objectId, planId);
+	}
+
+	@Override
+	public String showConfirmResult(String key,String seacrhType) {
+		return this.evalutionDao.showConfirmResult(key,seacrhType);
+	}
+
+	@Override
 	public Evaluation loadSelfByP0400(String p0400, String mainbodyid, String objectid,String planid) {
 		return this.evalutionDao.loadSelfByP0400(p0400, mainbodyid, objectid,planid);
 	}
