@@ -131,19 +131,24 @@ public class EvalutionController {
 		return null;
 	}
 
-	@ResponseBody
+	//@ResponseBody//目标卡可撤回
 	@RequestMapping(value = "/targetRecall",method = RequestMethod.GET)
-	public void targetRecall(@RequestParam(name = "objectId") String objectId,
+	public String targetRecall(@RequestParam(name = "objectId") String objectId,
 							 @RequestParam(name = "planId") String planId) {
 		//System.out.println(objectId + "----" + planId);
 		evalutionSerivce.targetRecall(objectId, planId);
+		return "redirect:http://127.0.0.1:8888/performance/objectiveManage/myObjective/" +
+				"my_objective_list.do?b_init=init&encryptParam=6Uat4RAtRbsYwYyX0xGQkNP0pdca8v1v";
 	}
 
-	@ResponseBody
+	//@ResponseBody//考核结果确认
 	@RequestMapping(value = "/resultConfirm", method = RequestMethod.GET)
-	public void resultConfirm(@RequestParam(name = "objectId") String objectId,
+	public String resultConfirm(@RequestParam(name = "objectId") String objectId,
 							  @RequestParam(name = "planId") String planId) {
 		evalutionSerivce.resultConfirm(objectId, planId);
+		return "redirect:http://127.0.0.1:8888/performance/objectiveManage/objectiveEvaluate/" +
+				"objective_evaluate_list.do?b_init=init&amp;" +
+				"encryptParam=wMN6@2HJF@sUR4ogQE@2HJF@GK4TnYvNw4sFovMpCilQ0bFp9sP6hexpFQD8OFM6tuWh8eq4SW";
 	}
 
 	//查看考核确认情况
