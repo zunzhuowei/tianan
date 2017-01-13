@@ -51,6 +51,8 @@ public class FinalService {
             }
 
         } else {//TODO 如果是普通员工登录
+            System.out.println("objectid = " + objectid);
+            System.out.println("mainbodyid = " + mainbodyid);
             if ("02".equals(objectSpFlag)) return "/target/showEvaGeneral"; //显示已经填好目标卡的状态的页面，不可编辑
             if ("03".equals(objectSpFlag) && planStatus == null) return "/target/showEvaGeneral"; //TODO........
             //下面这个是考核人在员工填好目标卡之后，可以查看员工目标的界面，所以不可以编辑
@@ -63,6 +65,9 @@ public class FinalService {
             } else if (ckeckSelfOrOther(objectid, mainbodyid)) {//如果是被考核人登陆，已打开评分状态
                 if ("2".equals(scoreStatus)) {
                     return "/target/showEvaGeneral";
+                }
+                if ("0".equals(scoreStatus) && "25".equals(newBody.trim())) {
+                    return "/target/evaOtherAdmin_hide";//2016年12月27日16:33:39
                 }
                 return "/target/evaSelfGeneral";//显示被考评人能填的页面--自评
             } else if (!ckeckSelfOrOther(objectid, mainbodyid)) {//如果是评分人登陆，已打开评分状态
