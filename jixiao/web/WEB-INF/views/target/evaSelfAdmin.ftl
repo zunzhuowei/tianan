@@ -267,6 +267,8 @@
             <span>${sape.evaluationSelfOther.otherScore }</span>
         </td>
     </tr>
+
+	</#list>
     <tr id="tyl">
         <td valign="middle" align="left" colspan="10" rowspan="1"
             style="word-break: break-all;; background: #EDEDED"><span
@@ -275,7 +277,6 @@
             style="word-break: break-all;color: #412014;; background: #EDEDED"><span
                 style="font-size: 12px;" id="nowRecord"></span></td>
     </tr>
-	</#list>
     <!-- ********************************The Second******************************************** -->
     <tr id="tyl">
         <td valign="middle" align="left" colspan="12" rowspan="1"

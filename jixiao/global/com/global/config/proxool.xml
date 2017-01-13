@@ -27,11 +27,11 @@
 
 	<proxool>		
 		<alias>mssql</alias>
-		<driver-url>jdbc:sqlserver://127.0.0.1:1433;databaseName=tianan</driver-url>
+		<driver-url>jdbc:sqlserver://10.0.8.28:1433;databaseName=ykchr</driver-url>
 		<driver-class>com.microsoft.sqlserver.jdbc.SQLServerDriver</driver-class>
 		<driver-properties>
-			<property name="user" value="sa"/>
-			<property name="password" value="123"/>
+			<property name="user" value="yksoft"/>
+			<property name="password" value="yksoft1919"/>
 		</driver-properties>
 		<maximum-connection-count>100</maximum-connection-count>
 		<minimum-connection-count>10</minimum-connection-count>
